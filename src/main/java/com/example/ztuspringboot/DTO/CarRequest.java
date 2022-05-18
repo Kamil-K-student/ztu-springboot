@@ -1,12 +1,9 @@
 package com.example.ztuspringboot.DTO;
 
-public class CarResponse {
+public class CarRequest {
     private int id;
     private String brand;
     private String model;
-
-    public CarResponse(int id, String brand, String model) {
-    }
 
     public int getId() {
         return id;

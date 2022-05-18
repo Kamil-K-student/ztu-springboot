@@ -1,17 +1,15 @@
 package com.example.ztuspringboot.Service;
 
+import com.example.ztuspringboot.DTO.CarRequest;
+import com.example.ztuspringboot.DTO.CarResponse;
 import com.example.ztuspringboot.Entity.Car;
 import com.example.ztuspringboot.Repository.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Streamable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CarService {
@@ -22,36 +20,37 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public List<Car> getAllCars(){
-        List<Car> cars = new ArrayList<>();
-        Streamable.of(carRepository.findAll())
-                .forEach(cars::add);
-        carRepository.findAll();
-        return cars;
+    public List<CarResponse> getAllCars(){
+        return StreamSupport.stream(carRepository.findAll().spliterator(), false)
+                .map(entity -> new CarResponse(entity.getId(), entity.getBrand(), entity.getModel()))
+                .collect(Collectors.toList());
     }
 
     public Object getById(Integer id){
         if (!carRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return carRepository.findById(id);
+            return carRepository.findById(id).get();
         }
     }
 
-    public void save(Car car){
+    public void save(CarRequest carRequest){
+        Car car = new Car();
+        car.setId(carRequest.getId());
+        car.setBrand(carRequest.getBrand());
+        car.setModel(carRequest.getModel());
         carRepository.save(car);
     }
 
-    public void delete(Car car){
-        carRepository.delete(car);
+    public void delete(Integer id){
+        carRepository.deleteById(id);
     }
 
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Car car, String model){
-        if (!carRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            car.setModel(model);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+    public void update(CarRequest carRequest){
+        Car car = new Car();
+        car.setId(carRequest.getId());
+        car.setBrand(carRequest.getBrand());
+        car.setModel(carRequest.getModel());
+        carRepository.save(car);
     }
 }

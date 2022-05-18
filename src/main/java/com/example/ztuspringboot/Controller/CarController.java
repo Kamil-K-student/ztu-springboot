@@ -1,15 +1,16 @@
 package com.example.ztuspringboot.Controller;
 
+import com.example.ztuspringboot.DTO.CarRequest;
+import com.example.ztuspringboot.DTO.CarResponse;
 import com.example.ztuspringboot.Service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class CarController {
-
-    private int i;
 
     private final CarService carService;
 
@@ -18,28 +19,37 @@ public class CarController {
     }
 
     @GetMapping("/cars/all")
-    public List getAllCars(){
-        return carService.getAllCars();
+    public ResponseEntity<List<CarResponse>> getAllCars(){
+        List<CarResponse> cars = carService.getAllCars();
+
+        return new ResponseEntity<>(cars, HttpStatus.OK);
 
     }
 
-    @GetMapping("/read/cars/{id}")
-    void readCar(int id){
+    @GetMapping("/car/get/{id}")
+    public ResponseEntity<?> getCar(@PathVariable("id") Integer id){
 
+        return new ResponseEntity<>(carService.getById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/cars")
-    void deleteCar(Integer id){
+    @DeleteMapping("car/delete/{id}")
+    public ResponseEntity<?> deleteCar(@PathVariable("id") Integer id){
+        carService.delete(id);
 
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @PutMapping("/put/cars/{id}")
-//    public ResponseEntity<?> addCar(@RequestBody ){
-//
-//    }
+    @PostMapping("car/post")
+    public ResponseEntity <?> addCar(@RequestBody CarRequest carRequest){
+        carService.save(carRequest);
 
-    @PostMapping("/post/cars")
-    void postCar(){
-//        carService.save(car);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("car/put")
+    public ResponseEntity<?> update(@RequestBody CarRequest carRequest){
+        carService.update(carRequest);
+
+        return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -1,27 +1,42 @@
 package com.example.ztuspringboot;
 
+import com.example.ztuspringboot.Controller.CarController;
+import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.Entity.Car;
 import com.example.ztuspringboot.Service.CarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 @SpringBootTest
 class ZtuSpringbootApplicationTests {
 	@Autowired
-	private CarService carService;
+	private CarController carController;
 	@Test
 	void contextLoads() {
 	}
 
 	@Test
 	void addCar(){
-		Car car = new Car();
-		car.setId(3);
-		car.setBrand("Toyota");
-		car.setModel("Yaris");
-		carService.save(car);
+		CarRequest carRequest = new CarRequest();
+		carRequest.setId(1);
+		carRequest.setBrand("Ford");
+		carRequest.setModel("Fiesta");
+		carController.addCar(carRequest);
 
 	}
+
+	@Test
+	void deleteCar(){
+		carController.deleteCar(1);
+	}
+
+	@Test
+	void getCar(){
+		ResponseEntity<?> v =  carController.getCar(2);
+		System.out.println(v);
+	}
+
 
 }
