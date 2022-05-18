@@ -33,10 +33,10 @@ public class CarController {
 
     }
 
-    @PutMapping("/put/cars/{id}")
-    void putCar(Integer id){
-
-    }
+//    @PutMapping("/put/cars/{id}")
+//    public ResponseEntity<?> addCar(@RequestBody ){
+//
+//    }
 
     @PostMapping("/post/cars")
     void postCar(){

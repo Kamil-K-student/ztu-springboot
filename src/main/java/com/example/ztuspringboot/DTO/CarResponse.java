@@ -1,13 +1,6 @@
-package com.example.ztuspringboot.Entity;
+package com.example.ztuspringboot.DTO;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "cars")
-public class Car {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CarResponse {
     private int id;
     private String brand;
     private String model;
@@ -35,5 +28,4 @@ public class Car {
     public void setModel(String model) {
         this.model = model;
     }
-
 }
