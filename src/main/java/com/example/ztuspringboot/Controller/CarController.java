@@ -46,10 +46,10 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("car/put")
-    public ResponseEntity<?> update(@RequestBody CarRequest carRequest){
-        carService.update(carRequest);
+    @PutMapping("car/put/{id}")
+    public ResponseEntity<?> update(@ PathVariable int id, @RequestBody CarRequest carRequest){
+        carRequest.setId(33);
 
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return  ResponseEntity.noContent().build();
     }
 }

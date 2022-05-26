@@ -2,8 +2,6 @@ package com.example.ztuspringboot;
 
 import com.example.ztuspringboot.Controller.CarController;
 import com.example.ztuspringboot.DTO.CarRequest;
-import com.example.ztuspringboot.Entity.Car;
-import com.example.ztuspringboot.Service.CarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,12 +27,12 @@ class ZtuSpringbootApplicationTests {
 
 	@Test
 	void deleteCar(){
-		carController.deleteCar(1);
+		carController.deleteCar(4);
 	}
 
 	@Test
 	void getCar(){
-		ResponseEntity<?> v =  carController.getCar(2);
+		ResponseEntity<?> v =  carController.getCar(3);
 		System.out.println(v);
 	}
 
