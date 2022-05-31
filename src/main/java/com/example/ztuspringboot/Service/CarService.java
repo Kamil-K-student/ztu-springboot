@@ -4,6 +4,7 @@ import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.DTO.CarResponse;
 import com.example.ztuspringboot.Entity.Car;
 import com.example.ztuspringboot.Repository.CarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,13 @@ public class CarService {
 
     private final CarRepository carRepository;
 
+    @Autowired
     CarService(final CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 
     public List<CarResponse> getAllCars(){
+
         return StreamSupport.stream(carRepository.findAll().spliterator(), false)
                 .map(entity -> new CarResponse(entity.getId(), entity.getBrand(), entity.getModel()))
                 .collect(Collectors.toList());

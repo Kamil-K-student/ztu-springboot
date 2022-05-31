@@ -2,6 +2,7 @@ package com.example.ztuspringboot.Controller;
 
 import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.DTO.CarResponse;
+import com.example.ztuspringboot.Entity.Car;
 import com.example.ztuspringboot.Service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,7 @@ public class CarController {
     public ResponseEntity<List<CarResponse>> getAllCars(){
         List<CarResponse> cars = carService.getAllCars();
 
-        return new ResponseEntity<>(cars, HttpStatus.OK);
-
+        return new ResponseEntity<List<CarResponse>>(cars, HttpStatus.OK);
     }
 
     @GetMapping("/car/get/{id}")
