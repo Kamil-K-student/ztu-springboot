@@ -1,6 +1,6 @@
 package com.example.ztuspringboot.Service;
 
-import com.example.ztuspringboot.CarServiceImpl.CarServiceImpl;
+import com.example.ztuspringboot.CarServiceImpl.CarService;
 import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.DTO.CarResponse;
 import com.example.ztuspringboot.Entity.Car;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class CarService implements CarServiceImpl {
+public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
 
     @Autowired
-    CarService(CarRepository carRepository) {
+    CarServiceImpl(CarRepository carRepository) {
 
         this.carRepository = carRepository;
     }
@@ -35,28 +35,32 @@ public class CarService implements CarServiceImpl {
         return carResponses;
     }
 
-    public Car getCarById(Integer id){
+    public CarResponse getCarById(Integer id){
 
-            return carRepository.findById(id).get();
+        Car entity = carRepository.findById(id).get();
+
+        return new CarResponse(entity.getId(), entity.getBrand(), entity.getModel());
     }
 
     public void saveCar(CarRequest carRequest){
+
         Car car = new Car();
         car.setId(carRequest.getId());
         car.setBrand(carRequest.getBrand());
         car.setModel(carRequest.getModel());
+
         carRepository.save(car);
     }
 
     public void deleteCar(Integer id){
+
         carRepository.deleteById(id);
     }
 
-    public void updateCar(CarRequest carRequest){
-        Car car = new Car();
-        car.setId(carRequest.getId());
-        car.setBrand(carRequest.getBrand());
-        car.setModel(carRequest.getModel());
-        carRepository.save(car);
+    public boolean ifCarExists(CarRequest carRequest){
+
+        int id = carRequest.getId();
+
+        return carRepository.existsById(id);
     }
 }

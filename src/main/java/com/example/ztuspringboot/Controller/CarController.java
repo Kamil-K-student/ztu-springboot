@@ -2,24 +2,21 @@ package com.example.ztuspringboot.Controller;
 
 import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.DTO.CarResponse;
-import com.example.ztuspringboot.Entity.Car;
-import com.example.ztuspringboot.Service.CarService;
-import org.springframework.http.HttpStatus;
+import com.example.ztuspringboot.Service.CarServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 public class CarController {
 
-    private final CarService carService;
+    private final CarServiceImpl carService;
 
-    CarController(final CarService carService) {
+    CarController(final CarServiceImpl carService) {
         this.carService = carService;
     }
 
-    @GetMapping("/cars/all")
+    @GetMapping("/car/all")
     public ResponseEntity<List<CarResponse>> getAllCars(){
         List<CarResponse> carResponses = carService.getAllCars();
 
@@ -27,29 +24,37 @@ public class CarController {
     }
 
     @GetMapping("/car/get/{id}")
-    public ResponseEntity<?> getCar(@PathVariable("id") Integer id){
+    public ResponseEntity<CarResponse> getCar(@PathVariable("id") Integer id){
 
-        return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
+        return ResponseEntity.ok(carService.getCarById(id));
     }
 
     @DeleteMapping("car/delete/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable("id") Integer id){
+
         carService.deleteCar(id);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("car/post")
     public ResponseEntity <?> addCar(@RequestBody CarRequest carRequest){
+
         carService.saveCar(carRequest);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("car/put/{id}")
-    public ResponseEntity<?> updateCar(@ PathVariable int id, @RequestBody CarRequest carRequest){
-        carRequest.setId(33);
+    public ResponseEntity<?> updateCar(@RequestBody CarRequest carRequest){
 
-        return  ResponseEntity.noContent().build();
+        if(carService.ifCarExists(carRequest)){
+            carService.saveCar(carRequest);
+
+            return  ResponseEntity.noContent().build();
+        } else {
+
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
