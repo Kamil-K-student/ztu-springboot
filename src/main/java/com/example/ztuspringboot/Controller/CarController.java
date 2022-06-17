@@ -21,33 +21,33 @@ public class CarController {
 
     @GetMapping("/cars/all")
     public ResponseEntity<List<CarResponse>> getAllCars(){
-        List<CarResponse> cars = carService.getAllCars();
+        List<CarResponse> carResponses = carService.getAllCars();
 
-        return new ResponseEntity<List<CarResponse>>(cars, HttpStatus.OK);
+        return ResponseEntity.ok(carResponses);
     }
 
     @GetMapping("/car/get/{id}")
     public ResponseEntity<?> getCar(@PathVariable("id") Integer id){
 
-        return new ResponseEntity<>(carService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("car/delete/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable("id") Integer id){
-        carService.delete(id);
+        carService.deleteCar(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("car/post")
     public ResponseEntity <?> addCar(@RequestBody CarRequest carRequest){
-        carService.save(carRequest);
+        carService.saveCar(carRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("car/put/{id}")
-    public ResponseEntity<?> update(@ PathVariable int id, @RequestBody CarRequest carRequest){
+    public ResponseEntity<?> updateCar(@ PathVariable int id, @RequestBody CarRequest carRequest){
         carRequest.setId(33);
 
         return  ResponseEntity.noContent().build();

@@ -6,6 +6,10 @@ public class CarResponse {
     private String model;
 
     public CarResponse(int id, String brand, String model) {
+
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
     }
 
     public int getId() {
