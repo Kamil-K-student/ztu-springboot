@@ -45,7 +45,6 @@ public class CarServiceImpl implements CarService {
     public void saveCar(CarRequest carRequest){
 
         Car car = new Car();
-        car.setId(carRequest.getId());
         car.setBrand(carRequest.getBrand());
         car.setModel(carRequest.getModel());
 

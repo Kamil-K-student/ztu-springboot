@@ -2,6 +2,7 @@ package com.example.ztuspringboot.Controller;
 
 import com.example.ztuspringboot.DTO.CarRequest;
 import com.example.ztuspringboot.DTO.CarResponse;
+import com.example.ztuspringboot.Entity.Car;
 import com.example.ztuspringboot.Service.CarServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,15 +30,15 @@ public class CarController {
         return ResponseEntity.ok(carService.getCarById(id));
     }
 
-    @DeleteMapping("car/delete/{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable("id") Integer id){
+    @DeleteMapping("/car/delete/{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable ("id") Integer id){
 
         carService.deleteCar(id);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("car/post")
+    @PostMapping("/car/post")
     public ResponseEntity <?> addCar(@RequestBody CarRequest carRequest){
 
         carService.saveCar(carRequest);
@@ -45,7 +46,7 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("car/put/{id}")
+    @PutMapping("/car/put/{id}")
     public ResponseEntity<?> updateCar(@RequestBody CarRequest carRequest){
 
         if(carService.ifCarExists(carRequest)){

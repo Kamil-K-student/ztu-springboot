@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 
 @SpringBootTest
 class ZtuSpringbootApplicationTests {
-//	@Autowired
-//	private CarController carController;
+	@Autowired
+	private CarController carController;
 //	@Test
 //	void contextLoads() {
 //	}
@@ -18,16 +18,15 @@ class ZtuSpringbootApplicationTests {
 //	@Test
 //	void addCar(){
 //		CarRequest carRequest = new CarRequest();
-//		carRequest.setId(1);
 //		carRequest.setBrand("Ford");
-//		carRequest.setModel("Fiesta");
+//		carRequest.setModel("Mondeo");
 //		carController.addCar(carRequest);
 //
 //	}
 //
 //	@Test
 //	void deleteCar(){
-//		carController.deleteCar(4);
+//		carController.deleteCar(3);
 //	}
 //
 //	@Test
